@@ -1,0 +1,15 @@
+extends layout
+
+block scripts
+    script(src='https://apis.google.com/js/api.js')
+    script(src='https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js')
+    script(src='/js/index.js')
+
+block content
+    div#app
+        input#video-url(v-model='url' @keydown.enter='onEnter' name='url' placeholder='Enter youtube video ID' ref='input')
+        .comments-container
+            .top-comment(v-for='comment in comments')
+                .text(v-html='comment.parentComment') 
+                .reply-comment(v-for='reply in comment.replies') 
+                    .text(v-html='reply')

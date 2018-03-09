@@ -1,0 +1,23 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: red;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.top-comment {
+    background-color: purple;
+}
+
+.reply-comment:nth-child(odd) {
+    background-color: green;
+    margin-left: 10px;
+}
+
+.reply-comment:nth-child(even) {
+    background-color: yellow;
+    margin-left: 10px;
+}
