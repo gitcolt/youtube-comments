@@ -89,18 +89,30 @@ $(function() {
         data: {
             url: '',
             comments: [],
+            search: '',
             nextPageToken: null
+        },
+        computed: {
         },
         methods: {
             onEnter: function() {
                 fetchComments(this.url)
+            },
+            filtered: function(comments) {
+                let that = this;
+                return comments.filter(function(comment) {
+                    let show = comment.text.toLowerCase().includes(that.search)
+                                || that.filtered(comment.replies).length !== 0;
+                    return show;
+                });
+                return comments;
             }
         },
         filters: {
             unescape(text) {
                 let doc = new DOMParser().parseFromString(text, 'text/html');
                 return doc.documentElement.textConent;
-            }
+            },
         }
     });
 
