@@ -8,16 +8,40 @@ a {
   color: #00B7FF;
 }
 
+hr {
+    margin: 0;
+}
+
+.author {
+    color: blue;
+}
+
+.text {
+    padding: 10px;
+}
+
+.comments-container {
+    margin-top: 20px;
+}
+
 .top-comment {
-    background-color: purple;
+    background-color: lightgray;
+    padding-left: 10px;
+}
+
+.reply-comment {
+    margin-left: 50px;
+    background-color: white;
+}
+
+.reply-comment:nth-child(1) {
+    background-color: yellow;
 }
 
 .reply-comment:nth-child(odd) {
-    background-color: green;
-    margin-left: 10px;
+    //background-color: green;
 }
 
 .reply-comment:nth-child(even) {
-    background-color: yellow;
-    margin-left: 10px;
+    //background-color: yellow;
 }

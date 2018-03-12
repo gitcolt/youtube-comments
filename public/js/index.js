@@ -1,5 +1,14 @@
 $(function() {
 
+    class Comment {
+        constructor(id, author, text, replies) {
+            this.id = id;
+            this.author = author;
+            this.text = text;
+            this.replies = replies;
+        }
+    }
+
     function getReplies(parentId) {
         return $.get(
             'https://www.googleapis.com/youtube/v3/comments', {
@@ -37,9 +46,11 @@ $(function() {
         getTopLevelComments(videoId, pageToken)
         .then(function(response) {
             $.each(response, function(i, comment) {
-                let topLevelComment = comment.snippet.topLevelComment.snippet.textDisplay;
+                let topLevelText = comment.snippet.topLevelComment.snippet.textDisplay;
                 let topLevelCommentId = comment.id;
-                comments.push( { id: topLevelCommentId, parentComment: topLevelComment, replies: [] } );
+                let topLevelAuthor = comment.snippet.topLevelComment.snippet.authorDisplayName;
+                let c = new Comment(topLevelCommentId, topLevelAuthor, topLevelText, []);
+                comments.push(c);
             });
             return comments; 
         }).then(function(comments) {
@@ -53,7 +64,10 @@ $(function() {
                 if (repliesList.items.length > 0) {
                     $.each(repliesList.items, function(i, reply) {
                         let replyText = reply.snippet.textDisplay;
-                        comments[repliesIdx].replies.push(replyText);
+                        let replyAuthor = reply.snippet.authorDisplayName;
+                        let c = new Comment(null, replyAuthor, replyText, []);
+                        comments[repliesIdx].replies.push(c);
+
                     });
                     comments[repliesIdx].replies.reverse();
                 }

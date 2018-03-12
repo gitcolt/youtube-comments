@@ -10,6 +10,11 @@ block content
         input#video-url(v-model='url' @keydown.enter='onEnter' name='url' placeholder='Enter youtube video ID' ref='input')
         .comments-container
             .top-comment(v-for='comment in comments')
-                .text(v-html='comment.parentComment') 
-                .reply-comment(v-for='reply in comment.replies') 
-                    .text(v-html='reply')
+                span.author(v-html='comment.author')
+                span.text(v-html='comment.text') 
+                .reply-comment(v-for='(reply, i) in comment.replies') 
+                    span.author(v-html='reply.author')
+                    span.text(v-html='reply.text')
+                    hr(v-if='i !== comment.replies.length - 1')
+                hr
+
