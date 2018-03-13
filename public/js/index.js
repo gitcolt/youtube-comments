@@ -101,11 +101,22 @@ $(function() {
             filtered: function(comments) {
                 let that = this;
                 return comments.filter(function(comment) {
-                    let show = comment.text.toLowerCase().includes(that.search)
+                    let show = comment.text.toLowerCase().includes(that.search.toLowerCase())
                                 || that.filtered(comment.replies).length !== 0;
                     return show;
                 });
-                return comments;
+            },
+            highlight: function(text) {
+                // Ignore highlighting if search value is empty
+                if (!this.search){
+                    return text;
+                }
+                let re = new RegExp('(' + this.search + ')', 'gi');
+                let matches = text.match(re);
+                if (matches)
+                    return text.replace(re, '<span class="highlight">$1</span>');
+                else
+                    return text;
             }
         },
         filters: {

@@ -13,10 +13,10 @@ block content
         .comments-container
             .top-comment(v-for='comment in filtered(comments)')
                 span.author(v-html='comment.author')
-                span.text(v-html='comment.text') 
+                span.text(v-html='highlight(comment.text)') 
                 .reply-comment(v-for='(reply, i) in filtered(comment.replies)') 
                     span.author(v-html='reply.author')
-                    span.text(v-html='reply.text')
+                    span.text(v-html='highlight(reply.text)')
                     hr(v-if='i !== comment.replies.length - 1')
                 hr
 
