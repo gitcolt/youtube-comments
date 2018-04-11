@@ -9,7 +9,7 @@ $(function() {
         }
     }
 
-    function getReplies(parentId) {
+    function fetchReplies(parentId) {
         return $.get(
             'https://www.googleapis.com/youtube/v3/comments', {
                 part: 'snippet',
@@ -20,11 +20,10 @@ $(function() {
         });
     }
 
-    function getTopLevelComments(videoId, pageToken) {
+    function fetchTopLevelComments(videoId, pageToken) {
         return $.get(
             'https://www.googleapis.com/youtube/v3/commentThreads', {
                 part: 'id,snippet',
-                //videoId: 'm4Jtj2lCMAA',
                 videoId: videoId,
                 pageToken: pageToken,
                 key: 'AIzaSyAPnPO5BHR0VGOx87eLdWtmktduh9wSrIc' },
@@ -34,16 +33,17 @@ $(function() {
         });
     }
 
-    function fetchComments(url, pageToken) {
-        // delete this
+    function getComments(url, pageToken) {
+        /*
         if (url === '') {
             url = 'https://www.youtube.com/watch?v=rwOI1biZeD8';
         }
+        */
         let i = url.indexOf('=') + 1;
         let videoId = url.slice(i);
         let comments = [];
 
-        getTopLevelComments(videoId, pageToken)
+        fetchTopLevelComments(videoId, pageToken)
         .then(function(response) {
             $.each(response, function(i, comment) {
                 let topLevelText = comment.snippet.topLevelComment.snippet.textDisplay;
@@ -56,7 +56,7 @@ $(function() {
         }).then(function(comments) {
             return Promise.all(
                 $.map(comments, function(comment) {
-                    return getReplies(comment.id); 
+                    return fetchReplies(comment.id); 
                 })
             );
         }).then(function(repliesLists) {
@@ -79,7 +79,7 @@ $(function() {
         })
         .then(function() {
             if (app.nextPageToken) {
-                fetchComments(app.url, app.nextPageToken);
+                getComments(app.url, app.nextPageToken);
             }
         });
     }
@@ -96,7 +96,7 @@ $(function() {
         },
         methods: {
             onEnter: function() {
-                fetchComments(this.url)
+                getComments(this.url)
             },
             filtered: function(comments) {
                 let that = this;

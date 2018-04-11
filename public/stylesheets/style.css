@@ -20,6 +20,10 @@ hr {
     color: blue;
 }
 
+.search {
+    margin-left: 50px;
+}
+
 .text {
     padding: 10px;
 }

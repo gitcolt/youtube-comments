@@ -8,7 +8,7 @@ block scripts
 block content
     div#app
         div
-            input#video-url(v-model='url' @keydown.enter='onEnter' name='url' placeholder='Enter youtube video ID' ref='input')
+            input#video-url(v-model='url' @keydown.enter='onEnter' name='url' placeholder='Enter video URL' ref='input')
             input.search(v-model='search' placeholder='search')
         .comments-container
             .top-comment(v-for='comment in filtered(comments)')
